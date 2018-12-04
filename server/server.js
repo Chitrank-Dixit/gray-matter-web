@@ -58,7 +58,7 @@ mongoose.Promise = global.Promise;
 
 // MongoDB Connection
 if (process.env.NODE_ENV !== 'test') {
-  mongoose.connect(serverConfig.mongoURL, (error) => {
+  mongoose.connect(serverConfig.mongoURL, { useNewUrlParser: true } ,(error) => {
     if (error) {
       console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
       throw error;
@@ -130,7 +130,7 @@ const renderError = err => {
 // start app
 app.listen(serverConfig.port, (error) => {
   if (!error) {
-    console.log(`MERN is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
+    console.log(`Gray Matter is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
   }
 });
 
