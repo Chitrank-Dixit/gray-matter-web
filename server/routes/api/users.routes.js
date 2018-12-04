@@ -2,17 +2,17 @@ import { Router } from 'express';
 import * as UserController from '../../controllers/user.controller';
 const router = new Router();
 
-// Get all Posts
-router.route('/users').get(UserController.getPosts);
+// Get all Users
+router.route('/users').get(UserController.getUsers);
 
-// Get one post by cuid
-router.route('/users/:cuid').get(UserController.getPost);
+// Get one user by cuid
+router.route('/users/:cuid').get(UserController.getUser);
 
-// Add a new Post
-router.route('/users').post(UserController.addPost);
+// Add a new User
+router.route('/users').post(UserController.addUser);
 
-// Delete a post by cuid
-router.route('/users/:cuid').delete(UserController.deletePost);
+// Delete a user by cuid
+router.route('/users/:cuid').delete(UserController.deleteUser);
 
 // update user data using put or patch
 
