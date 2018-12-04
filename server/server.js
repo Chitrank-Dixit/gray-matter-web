@@ -46,8 +46,8 @@ import passport from 'passport';
 // Import required modules
 //import routes from '../client/routes';
 //import { fetchComponentData } from './util/fetchData';
-//import auth from './routes/api/auth.routes';
-//import users from './routes/api/users.routes';
+import auth from './routes/api/auth.routes';
+import users from './routes/api/users.routes';
 //import dummyData from './dummyData';
 import serverConfig from './config';
 
@@ -75,11 +75,14 @@ app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
-app.use('/api/v1', auth);
-app.use('/api/v1', passport.authenticate('jwt', {session: false}), users);
+var router = Express.Router();
+router.use('/user', passport.authenticate('jwt', {session: false}), users);
+router.use('/auth', auth);
+app.use('/api/v1', router);
 
 
-//app.use(require('./routes'));
+// require('./models/User');
+// app.use(require('./routes'));
 
 
 

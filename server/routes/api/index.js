@@ -2,8 +2,8 @@ import Express from 'express';
 import passport from 'passport';
 var router = Express.Router();
 
-router.use('/api/v1', require('./auth.routes.js'));
-router.use('/api/v1', passport.authenticate('jwt', {session: false}), require('./users.routes.js'));
+router.use('/auth', require('./auth.routes'));
+router.use('/user', passport.authenticate('jwt', {session: false}), require('./users.routes'));
 
 router.use(function(err, req, res, next){
     if(err.name === 'ValidationError'){
