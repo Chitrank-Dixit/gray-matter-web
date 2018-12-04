@@ -46,8 +46,8 @@ import passport from 'passport';
 // Import required modules
 //import routes from '../client/routes';
 //import { fetchComponentData } from './util/fetchData';
-import auth from './routes/api/auth.routes';
-import users from './routes/api/users.routes';
+//import auth from './routes/api/auth.routes';
+//import users from './routes/api/users.routes';
 //import dummyData from './dummyData';
 import serverConfig from './config';
 
@@ -70,25 +70,26 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 // Apply body Parser and server public assets and routes
+
 app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
-// app.use('/api', posts);
 app.use('/api/v1', auth);
 app.use('/api/v1', passport.authenticate('jwt', {session: false}), users);
+
 
 //app.use(require('./routes'));
 
 
 
 
-const renderError = err => {
-  const softTab = '&#32;&#32;&#32;&#32;';
-  const errTrace = isProdMode ?
-    `:<br><br><pre style="color:red">${softTab}${err.stack.replace(/\n/g, `<br>${softTab}`)}</pre>` : '';
-  return renderFullPage(`Server Error${errTrace}`, {});
-};
+// const renderError = err => {
+//   const softTab = '&#32;&#32;&#32;&#32;';
+//   const errTrace = isProdMode ?
+//     `:<br><br><pre style="color:red">${softTab}${err.stack.replace(/\n/g, `<br>${softTab}`)}</pre>` : '';
+//   return renderFullPage(`Server Error${errTrace}`, {});
+// };
 
 // Server Side Rendering based on routes matched by React-router.
 // app.use((req, res, next) => {
@@ -130,7 +131,7 @@ const renderError = err => {
 // start app
 app.listen(serverConfig.port, (error) => {
   if (!error) {
-    console.log(`Gray Matter is running on port: ${serverConfig.port}! Build something amazing!`); // eslint-disable-line
+    console.log(`Gray Matter is running on port: ${serverConfig.port}! Build next generation learning app!`); // eslint-disable-line
   }
 });
 

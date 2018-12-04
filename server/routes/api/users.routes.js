@@ -16,4 +16,7 @@ router.route('/users/:cuid').delete(UserController.deleteUser);
 
 // update user data using put or patch
 
+// test
+router.route('/us').get(UserController.getUsersTest);
+
 export default router;

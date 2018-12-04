@@ -1,4 +1,4 @@
-import User from '../models/users';
+import User from '../models/User';
 import cuid from 'cuid';
 import slug from 'limax';
 import sanitizeHtml from 'sanitize-html';
@@ -9,6 +9,10 @@ import sanitizeHtml from 'sanitize-html';
  * @param res
  * @returns void
  */
+export function getUsersTest(req, res) {
+  res.json({ "message": "worked"});
+}
+
 export function getUsers(req, res) {
   User.find().sort('-createdAt').exec((err, users) => {
     if (err) {
