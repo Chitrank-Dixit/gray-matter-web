@@ -11,7 +11,7 @@ const app = new Express();
 const isDevMode = process.env.NODE_ENV === 'development' || false;
 const isProdMode = process.env.NODE_ENV === 'production' || false;
 
-
+//require('./passport')(passport);
 // Run Webpack dev server in development mode
 if (isDevMode) {
     // Webpack Requirements
@@ -72,9 +72,15 @@ if (process.env.NODE_ENV !== 'test') {
 // Apply body Parser and server public assets and routes
 
 app.use(compression());
+
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
+//app.use(passport.initialize());
+//app.use(passport.session());
+
+import './controllers/passport';
+//require('./controllers/passport')(passport);
 var router = Express.Router();
 router.use('/user', passport.authenticate('jwt', {session: false}), users);
 router.use('/auth', auth);

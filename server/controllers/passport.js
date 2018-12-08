@@ -2,6 +2,7 @@
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import passportJWT from 'passport-jwt';
+import UserModel from '../models/User';
 const LocalStrategy = passportLocal.Strategy;
 const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
@@ -12,9 +13,9 @@ passport.use(new JWTStrategy({
     secretOrKey   : 'your_jwt_secret'
 },
 function (jwtPayload, cb) {
-
+    console.log(jwtPayload);
     //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-    return UserModel.findOneById(jwtPayload.id)
+    return UserModel.findById(jwtPayload._id)
         .then(user => {
             return cb(null, user);
         })
@@ -30,12 +31,22 @@ passport.use(new LocalStrategy({
     }, 
     function (email, password, cb) {
         //this one is typically a DB call. Assume that the returned user object is pre-formatted and ready for storing in JWT
-        return UserModel.findOne({email, password})
+        return UserModel.findOne({email})
            .then(user => {
                if (!user) {
                    return cb(null, false, {message: 'Incorrect email or password.'});
                }
-               return cb(null, user, {message: 'Logged In Successfully'});
+               else if (user.validPassword(password))
+               {
+                    
+                    return cb(null, user, {message: 'Logged In Successfully'});
+               }
+               else {
+                    
+                    return cb(null, false, {message: 'Error occured while authentication'});
+               }
+               
+               
           })
           .catch(err => cb(err));
     }

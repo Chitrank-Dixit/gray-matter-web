@@ -14,7 +14,7 @@ export function getUsersTest(req, res) {
 }
 
 export function getUsers(req, res) {
-  User.find().sort('-createdAt').exec((err, users) => {
+  User.find().select({'username': '1', 'email': '1', 'age': '1'}).sort('-createdAt').exec((err, users) => {
     if (err) {
       res.status(500).send(err);
     }
