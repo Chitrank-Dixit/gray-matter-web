@@ -26,7 +26,7 @@
   "scripts": {
     "build_server": "babel server -d dist",
     "client": "cd client && yarn start",
-    "start": "npm run build_server && cd dist && nodemon server.js",
+    "start": "npm run build_server && cd dist && nodemon server.js && npm run client",
     "rstart": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
