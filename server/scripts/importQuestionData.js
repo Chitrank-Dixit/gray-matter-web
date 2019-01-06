@@ -21,42 +21,37 @@ const request = require('request');
 var mongodb;
 var collectionName = "some-collection";
 
-MongoClient.connect(url, function(err, db) {
+MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
     if (err) throw err;
     mongodb = db;
 });
 
 const initialQuestionImport = function() {
-    var csvFile = path.relative(process.cwd(), "./server/files/initial_question.csv");
+    var csvFile = path.relative(process.cwd(), "./server/files/importQuestionsToDb.csv");
     //when parse finished, result will be emitted here.
     csvtojson().fromFile(csvFile).then(function(jsonArrayObj) { 
         // const dbName = 'test';
-        //var profileIdList = [];
-        //console.log("______________",jsonArrayObj);
-
-        MongoClient.connect(url, { useNewUrlParser: true }, function(err, client) {
-            const db = client.db(dbName);
-            const questions = db.collection('questions');
-            questions.insertMany(jsonArrayObj, function(err, doc){
-                if (err) throw err;
-                else {
-                    console.log("data inserted");
-                    return true;
-                }
-            });
-            // jsonArrayObj.forEach(element => {
-            //     questions.insertOne(element, function(err, doc){
-            //         if (err) { console.log(err); }
-            //         else {
-            //             console.log("", doc);
-            //         }
-            //     });
-            // });
+        const db = mongodb.db(dbName);
+        const questions = db.collection('questions');
+        questions.insertMany(jsonArrayObj, function(err, doc){
+            if (err) throw err;
+            else {
+                console.log("data inserted");
+                mongodb.close();
+                return true;
+            }
         });
-        
-        // for (var obj in jsonArrayObj){
-        //     profileIdList.push(obj["Profile_id"]);
-        // }
+        // jsonArrayObj.forEach(element => {
+        //     questions.insertOne(element, function(err, doc){
+        //         if (err) { 
+        //             console.log(element, err); 
+        //             client.close();
+        //         }
+        //         else {
+        //             console.log("inserted...");
+        //         }
+        //     });
+        // });
     });
 }
 
@@ -65,36 +60,32 @@ const questionImport = function() {
     //when parse finished, result will be emitted here.
     csvtojson().fromFile(csvFile).then(function(jsonArrayObj) { 
         // const dbName = 'test';
-        //var profileIdList = [];
-        //console.log("______________",jsonArrayObj);
-
-        MongoClient.connect(url, { useNewUrlParser: true }, function(err, client) {
-            const db = client.db(dbName);
-            const questions = db.collection('questions');
-            questions.insertMany(jsonArrayObj, function(err, doc){
-                if (err) throw err;
-                else {
-                    console.log("data inserted");
-                    client.close();
-                }
-            });
-            // jsonArrayObj.forEach(element => {
-            //     questions.insertOne(element, function(err, doc){
-            //         if (err) { console.log(err); }
-            //         else {
-            //             console.log("", doc);
-            //         }
-            //     });
-            // });
+        const db = mongodb.db(dbName);
+        const questions = db.collection('questions');
+        questions.insertMany(jsonArrayObj, function(err, doc){
+            if (err) throw err;
+            else {
+                console.log("data inserted");
+                mongodb.close();
+            }
         });
-        
-        // for (var obj in jsonArrayObj){
-        //     profileIdList.push(obj["Profile_id"]);
-        // }
+        // jsonArrayObj.forEach(element => {
+        //     questions.insertOne(element, function(err, doc){
+        //         if (err) { 
+        //             console.log(element, err); 
+        //             client.close();
+        //         }
+        //         else {
+        //             console.log("inserted...");
+        //         }
+        //     });
+        // });
+        //client.close();
     });
-    return true;
 }
 
+
+//initialQuestionImport();
 questionImport();
 
 const importQuestionFromOtherResources = function() {
