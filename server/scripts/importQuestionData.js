@@ -86,7 +86,7 @@ const questionImport = function() {
 
 
 //initialQuestionImport();
-questionImport();
+//questionImport();
 
 const importQuestionFromOtherResources = function() {
     request('https://opentdb.com/api.php?amount=50', function (error, response, body) {
