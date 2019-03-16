@@ -27,7 +27,9 @@
     "redux": "^4.0.1",
     "request": "^2.88.0",
     "sanitize-html": "^1.19.2",
-    "sinon": "^7.2.2"
+    "sinon": "^7.2.2",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^3.8.0"
   },
   "scripts": {
     "build_server": "babel server -d dist",
