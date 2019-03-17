@@ -1,6 +1,6 @@
-version: "2"
+version: "3.4"
 services:
-  gray-matter_web:
+  gray-matter-web:
     container_name: gray-matter-web
     restart: always
     build: .
