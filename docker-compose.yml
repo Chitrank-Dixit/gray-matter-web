@@ -1,7 +1,7 @@
 version: "2"
 services:
   graymatter_web:
-    container_name: graymatter_web
+    container_name: gray-matter-web
     restart: always
     build: .
     ports:

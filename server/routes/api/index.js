@@ -3,6 +3,7 @@ import passport from 'passport';
 var router = Express.Router();
 
 router.use('/auth', require('./auth.routes'));
+router.use('/questions', require('./questions.routes'));
 router.use('/user', passport.authenticate('jwt', {session: false}), require('./users.routes'));
 
 router.use(function(err, req, res, next){
