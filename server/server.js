@@ -1,15 +1,19 @@
-import Express from 'express';
-import compression from 'compression';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import path from 'path';
+var express = require('express'),
+    compression = require('compression'),
+    mongoose = require('mongoose'),
+    bodyParser = require('body-parser'),
+    path = require('path');
 
 // Initialize the Express App
-const app = new Express();
+var app = express();
 
+// models
+require('./models/User');
+
+require('dotenv').config();
 // Set Development modes checks
-const isDevMode = process.env.NODE_ENV === 'development' || false;
-const isProdMode = process.env.NODE_ENV === 'production' || false;
+var isDevMode = process.env.NODE_ENV === 'development' || false;
+var isProdMode = process.env.NODE_ENV === 'production' || false;
 
 //require('./passport')(passport);
 // Run Webpack dev server in development mode
@@ -35,21 +39,23 @@ if (isDevMode) {
   }
 
   // React And Redux Setup
-import { configureStore } from '../client/store';
-import { Provider } from 'react-redux';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
-import Helmet from 'react-helmet';
-import passport from 'passport';
+var configureStore = require('../client/store'),
+    Provider = require('react-redux'),
+    React = require('react'),
+    renderToString = require('react-dom/server'),
+    match, RouterContext = require('react-router'),
+    Helmet = require('react-helmet'),
+    passport = require('passport');
 
 // Import required modules
 //import routes from '../client/routes';
 //import { fetchComponentData } from './util/fetchData';
-import auth from './routes/api/auth.routes';
-import users from './routes/api/users.routes';
+var auth = require('./routes/api/auth.routes');
+var users = require('./routes/api/users.routes');
+require('./routes/api/questions.routes');
+
 //import dummyData from './dummyData';
-import serverConfig from './config';
+var serverConfig = require('./config');
 
 // require('./passport');
 
@@ -75,13 +81,13 @@ app.use(compression());
 
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
-app.use(Express.static(path.resolve(__dirname, '../dist/client')));
+app.use(express.static(path.resolve(__dirname, '../dist/client')));
 //app.use(passport.initialize());
 //app.use(passport.session());
 
-import './controllers/passport';
+require('./controllers/passport');
 //require('./controllers/passport')(passport);
-var router = Express.Router();
+var router = express.Router();
 router.use('/user', passport.authenticate('jwt', {session: false}), users);
 router.use('/auth', auth);
 app.use('/api/v1', router);
@@ -144,4 +150,4 @@ app.listen(serverConfig.port, (error) => {
   }
 });
 
-export default app;
+//export default app;

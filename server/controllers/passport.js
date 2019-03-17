@@ -1,8 +1,8 @@
 //passport.js
-import passport from 'passport';
-import passportLocal from 'passport-local';
-import passportJWT from 'passport-jwt';
-import UserModel from '../models/User';
+var passport =require('passport');
+var passportLocal = require('passport-local');
+var passportJWT = require('passport-jwt');
+var UserModel = require('../models/User');
 const LocalStrategy = passportLocal.Strategy;
 const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;

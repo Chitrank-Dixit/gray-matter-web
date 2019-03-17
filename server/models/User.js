@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import crypto from 'crypto';
+var mongoose = require('mongoose');
+var crypto = require('crypto');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -26,4 +26,4 @@ userSchema.methods.setPassword = function(password) {
     this.password = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
 
-export default mongoose.model('User', userSchema);
+mongoose.model('User', userSchema, 'User');

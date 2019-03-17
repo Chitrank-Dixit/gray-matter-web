@@ -1,7 +1,7 @@
-import User from '../models/User';
-import cuid from 'cuid';
-import slug from 'limax';
-import sanitizeHtml from 'sanitize-html';
+var User = require('../models/User');
+var cuid = require('cuid');
+var slug = require('limax');
+var sanitizeHtml = require('sanitize-html');
 
 /**
  * Get all users
@@ -9,11 +9,12 @@ import sanitizeHtml from 'sanitize-html';
  * @param res
  * @returns void
  */
-export function getUsersTest(req, res) {
+
+const getUsersTest = function(req, res) {
   res.json({ "message": "worked"});
 }
 
-export function getUsers(req, res) {
+const getUsers = function(req, res) {
   User.find().select({'username': '1', 'email': '1', 'age': '1'}).sort('-createdAt').exec((err, users) => {
     if (err) {
       res.status(500).send(err);
@@ -28,7 +29,7 @@ export function getUsers(req, res) {
  * @param res
  * @returns void
  */
-export function addUser(req, res) {
+const addUser = function(req, res) {
   if (!req.body.user.email || !req.body.user.password || !req.body.user.age) {
     res.status(403).end();
   }
@@ -56,7 +57,7 @@ export function addUser(req, res) {
  * @param res
  * @returns void
  */
-export function getUser(req, res) {
+const getUser = function(req, res) {
   User.findOne({ cuid: req.params.cuid }).exec((err, user) => {
     if (err) {
       res.status(500).send(err);
@@ -71,7 +72,7 @@ export function getUser(req, res) {
  * @param res
  * @returns void
  */
-export function deleteUser(req, res) {
+const deleteUser = function(req, res) {
   User.findOne({ cuid: req.params.cuid }).exec((err, user) => {
     if (err) {
       res.status(500).send(err);
@@ -81,4 +82,12 @@ export function deleteUser(req, res) {
       res.status(200).end();
     });
   });
+}
+
+module.exports = {
+  getUsersTest: getUsersTest,
+  getUsers: getUsers,
+  addUser: addUser,
+  getUser: getUser,
+  deleteUser: deleteUser
 }

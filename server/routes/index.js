@@ -1,6 +1,6 @@
-import Express from 'express';
+var Express = require('express');
 var router = Express.Router();
 
 router.use('/api', require('./api'));
 
-export default router;
+module.exports = router;
