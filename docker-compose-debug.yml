@@ -1,15 +1,19 @@
-version: "2"
+version: "3.4"
 services:
-  gray-matter_web:
+  gray-matter-web:
     container_name: gray-matter-web
     restart: always
     build: .
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
     ports:
       - "3000:3000"
+      - "9229:9229"
     links:
       - mongo
+    volumes:
+      - ./:/usr/src/app
+    command: "node --inspect=0.0.0.0:9229 ./server/server.js"
   mongo:
     container_name: mongo
     image: mongo

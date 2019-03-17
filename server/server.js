@@ -52,7 +52,7 @@ var configureStore = require('../client/store'),
 //import { fetchComponentData } from './util/fetchData';
 var auth = require('./routes/api/auth.routes');
 var users = require('./routes/api/users.routes');
-require('./routes/api/questions.routes');
+var question = require('./routes/api/questions.routes');
 
 //import dummyData from './dummyData';
 var serverConfig = require('./config');
@@ -90,6 +90,7 @@ require('./controllers/passport');
 var router = express.Router();
 router.use('/user', passport.authenticate('jwt', {session: false}), users);
 router.use('/auth', auth);
+router.use('/question', question);
 app.use('/api/v1', router);
 
 
