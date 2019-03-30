@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "compression": "^1.7.3",
@@ -27,6 +28,7 @@
     "request": "^2.88.0",
     "sanitize-html": "^1.19.2",
     "sinon": "^7.2.2",
+    "socket.io": "^2.2.0",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.8.0"
   },

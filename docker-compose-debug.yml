@@ -9,7 +9,9 @@ services:
     ports:
       - "3000:3000"
       - "9229:9229"
-    links:
+    networks:
+      - nodeapp-network
+    depends_on:
       - mongo
     volumes:
       - ./:/usr/src/app
@@ -21,3 +23,9 @@ services:
       - ./data:/data/db
     ports:
       - "27017:27017"
+    networks:
+      - nodeapp-network
+
+networks:
+  nodeapp-network:
+    driver: bridge

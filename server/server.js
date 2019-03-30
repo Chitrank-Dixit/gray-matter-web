@@ -17,26 +17,26 @@ var isProdMode = process.env.NODE_ENV === 'production' || false;
 
 //require('./passport')(passport);
 // Run Webpack dev server in development mode
-if (isDevMode) {
-    // Webpack Requirements
-    // eslint-disable-next-line global-require
-    const webpack = require('webpack');
-    // eslint-disable-next-line global-require
-    const config = require('../webpack.config.dev');
-    // eslint-disable-next-line global-require
-    const webpackDevMiddleware = require('webpack-dev-middleware');
-    // eslint-disable-next-line global-require
-    const webpackHotMiddleware = require('webpack-hot-middleware');
-    const compiler = webpack(config);
-    app.use(webpackDevMiddleware(compiler, {
-      noInfo: true,
-      publicPath: config.output.publicPath,
-      watchOptions: {
-        poll: 1000,
-      },
-    }));
-    app.use(webpackHotMiddleware(compiler));
-  }
+// if (isDevMode) {
+//     // Webpack Requirements
+//     // eslint-disable-next-line global-require
+//     const webpack = require('webpack');
+//     // eslint-disable-next-line global-require
+//     const config = require('../webpack.config.dev');
+//     // eslint-disable-next-line global-require
+//     const webpackDevMiddleware = require('webpack-dev-middleware');
+//     // eslint-disable-next-line global-require
+//     const webpackHotMiddleware = require('webpack-hot-middleware');
+//     const compiler = webpack(config);
+//     app.use(webpackDevMiddleware(compiler, {
+//       noInfo: true,
+//       publicPath: config.output.publicPath,
+//       watchOptions: {
+//         poll: 1000,
+//       },
+//     }));
+//     app.use(webpackHotMiddleware(compiler));
+//   }
 
   // React And Redux Setup
 var configureStore = require('../client/store'),
