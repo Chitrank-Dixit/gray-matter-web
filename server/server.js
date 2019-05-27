@@ -2,7 +2,8 @@ var express = require('express'),
     compression = require('compression'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
-    path = require('path');
+    path = require('path'),
+    morgan = require('morgan');
 
 // Initialize the Express App
 var app = express();
@@ -82,6 +83,7 @@ app.use(compression());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(express.static(path.resolve(__dirname, '../dist/client')));
+app.use(morgan('combined'));
 //app.use(passport.initialize());
 //app.use(passport.session());
 
