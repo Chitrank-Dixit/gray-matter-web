@@ -7,7 +7,8 @@ var express = require('express'),
 
 // Initialize the Express App
 var app = express();
-
+var sock_server = require('http').Server(app);
+var io = require('socket.io')(sock_server);
 // models
 require('./models/User');
 
@@ -54,6 +55,7 @@ var configureStore = require('../client/store'),
 var auth = require('./routes/api/auth.routes');
 var users = require('./routes/api/users.routes');
 var question = require('./routes/api/questions.routes');
+var test = require('./routes/api/test.socket');
 
 //import dummyData from './dummyData';
 var serverConfig = require('./config');
@@ -93,6 +95,7 @@ var router = express.Router();
 router.use('/user', passport.authenticate('jwt', {session: false}), users);
 router.use('/auth', auth);
 router.use('/question', question);
+//router.use('/t', test);
 app.use('/api/v1', router);
 
 
@@ -147,10 +150,17 @@ app.use('/api/v1', router);
 // });
 
 // start app
-app.listen(serverConfig.port, (error) => {
+sock_server.listen(serverConfig.port, (error) => {
   if (!error) {
     console.log(`Gray Matter is running on port: ${serverConfig.port}! Build next generation learning app!`); // eslint-disable-line
   }
+});
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
 
 //export default app;
