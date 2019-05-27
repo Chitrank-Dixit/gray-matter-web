@@ -84,10 +84,6 @@ const questionImport = function() {
     });
 }
 
-
-//initialQuestionImport();
-//questionImport();
-
 const importQuestionFromOtherResources = function() {
     var question_urls = [
         // "https://opentdb.com/api.php?amount=10&category=19",
@@ -97,10 +93,10 @@ const importQuestionFromOtherResources = function() {
         // "https://opentdb.com/api.php?amount=50&category=19&difficulty=medium&type=boolean",
         // "https://opentdb.com/api.php?amount=50&category=19&difficulty=hard&type=multiple",
         // "https://opentdb.com/api.php?amount=50&category=19&difficulty=hard&type=boolean",
-        "https://opentdb.com/api.php?amount=50&category=19"
+        "https://opentdb.com/api.php?amount=40&category=19"
     ]
     question_urls.forEach((question) => {
-        request('https://opentdb.com/api.php?amount=50&category=19', function (error, response, body) {
+        request(question, function (error, response, body) {
             console.log('error:', error); // Print the error if one occurred
             console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             console.log('body:', typeof body); // Print the HTML for the Google homepage.
@@ -249,93 +245,75 @@ const importQuestionFromOtherResourcesToJson = function() {
         
 }
 
-
 const getQuestions = async (category, difficulty, questions) => {
     var url;
     if(category === "0" && difficulty === "any") {
-        url = `https://opentdb.com/api.php?amount=${questions}&encode=url3986`;
+        url = `https://opentdb.com/api.php?amount=${questions}`;
     } else if(category === "0") {
-        url = `https://opentdb.com/api.php?amount=${questions}&difficulty=${difficulty}&encode=url3986`;
+        url = `https://opentdb.com/api.php?amount=${questions}&difficulty=${difficulty}`;
     } else if(difficulty === "any") {
-        url = `https://opentdb.com/api.php?amount=${questions}&category=${category}&encode=url3986`;
+        url = `https://opentdb.com/api.php?amount=${questions}&category=${category}`;
     } else {
-        url = `https://opentdb.com/api.php?amount=${questions}&category=${category}&difficulty=${difficulty}&encode=url3986`;
+        url = `https://opentdb.com/api.php?amount=${questions}&category=${category}&difficulty=${difficulty}`;
     };
 
     try {
         var response = await axios.get(url);
-        // var body = response.data.results;
-        // var top_header = [
-        //     "Question", 
-        //     "Answer", 
-        //     "Options", 
-        //     "explaination", 
-        //     "level", 
-        //     "brain part improvement", 
-        //     "subject", 
-        //     "topic", 
-        //     "subtopic", 
-        //     "tags asked in (asked in which examination)", 
-        //     "Upvotes"
-        // ];
-        // const question_arr = [];
-        // if (body.length === 0) {
-        //     body.forEach(element => {
-        //         var jsonData = {
-        //             "Question": element["question"], 
-        //             "Answer": element["correct_answer"], 
-        //             "Options": [element["correct_answer"] + element["incorrect_answers"]], 
-        //             "explaination": "", 
-        //             "level": element["difficulty"], 
-        //             "brain part improvement": "", 
-        //             "subject": element["category"], 
-        //             "topic": "", 
-        //             "subtopic": "", 
-        //             "tags": [element["category"] + element["type"] + element["difficulty"]], 
-        //             "Upvotes": 0
-        //         };
+        var body = response.data.results;
+        var top_header = [
+            "Question", 
+            "Answer", 
+            "Options", 
+            "explaination", 
+            "level", 
+            "brain part improvement", 
+            "subject", 
+            "topic", 
+            "subtopic", 
+            "tags asked in (asked in which examination)", 
+            "Upvotes"
+        ];
+        const question_arr = [];
+        if (body.length > 0) {
+            body.forEach(element => {
+                var incorrect_answers = [];
+                element["incorrect_answers"].forEach((element) => {
+                    incorrect_answers.push(decodeURIComponent(element))
+                })
+                var jsonData = {
+                    "Question": decodeURIComponent(element["question"]), 
+                    "Answer": decodeURIComponent(element["correct_answer"]), 
+                    "Options": [decodeURIComponent(element["correct_answer"]), incorrect_answers], 
+                    "explaination": "", 
+                    "level": decodeURIComponent(element["difficulty"]), 
+                    "brain part improvement": "", 
+                    "subject": decodeURIComponent(element["category"]), 
+                    "topic": "", 
+                    "subtopic": "", 
+                    "tags": [decodeURIComponent(element["category"]), decodeURIComponent(element["type"]) , decodeURIComponent(element["difficulty"])], 
+                    "asked in (asked in which examination)": "",
+                    "Upvotes": 0,
+                    "Category": ""
+                };
                 
-        //         question_arr.push(jsonData);
-        //         //console.log(arr);
-        //     });
-        // }
-        // const json2csvParser = new Json2csvParser({ top_header });
-        // const npath = path.relative(process.cwd(), "./server/files/importQuestionsToDb1.csv");
-        // console.log(npath);
-        // const json_data = json2csvParser.parse(question_arr);
-        // console.log(json_data);
-        // if (body.length > 0) {
-        //     body.forEach((question) => {
-        //         fs.stat(npath, function (err, stat) {
-        //             if (err == null) {
-        //                 console.log('File exists');
-                
-        //                 //write the actual data and end with newline
-        //                 //var csv = json2csv(toCsv) + newLine;
-                
-        //                 fs.appendFile(npath, question, function (err) {
-        //                     if (err) throw err;
-        //                     console.log('The "data to append" was appended to file!');
-        //                 });
-        //             }
-        //             else {
-        //                 //write the headers and newline
-        //                 console.log('New file, just writing headers');
-        //                 //fields= (fields + newLine);
-                
-        //                 fs.writeFile(npath, question, function (err, stat) {
-        //                     if (err) throw err;
-        //                     console.log('file saved');
-        //                 });
-        //             }
-        //         });
-        //     })
-                
-        //     }
-        return response.data.results;
+                question_arr.push(jsonData);
+            });
+        }
+        const json2csvParser = new Json2csvParser({ top_header });
+        return json2csvParser.parse(question_arr);
+        
     } catch (error) {
         throw new Error("Unable to fetch questions", error);
     }
+
+}
+
+const populateQuestionToDb = function(file) {
+    var tmp_path = file.path;
+    var src = fs.createReadStream(tmp_path);
+    csvtojson.fromStream(src).then(function(jsonArrayObj) {
+        
+    })
 
 }
 
@@ -344,5 +322,6 @@ module.exports = {
     questionImport: questionImport,
     importQuestionFromOtherResources: importQuestionFromOtherResources,
     importQuestionFromOtherResourcesToJson: importQuestionFromOtherResourcesToJson,
-    getQuestions: getQuestions
+    getQuestions: getQuestions,
+    populateQuestionToDb: populateQuestionToDb
 }
