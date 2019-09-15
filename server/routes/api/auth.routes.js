@@ -32,7 +32,7 @@ router.post('/register', (req, res, next) => {
     user.username = req.body.username;
     user.email = req.body.email;
     user.setPassword(req.body.password);
-    user.age = req.body.age;
+    user.age = req.body.age || 18;
     console.log("user credentials got", user);
     user.save().then(function(){
         return res.json({"message": "user created...."})//res.json({user: user.toAuthJSON()});

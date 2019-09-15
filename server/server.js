@@ -163,4 +163,7 @@ io.on('connection', function (socket) {
   });
 });
 
+// https://stackoverflow.com/questions/50438542/how-to-setup-socket-io-for-listen-separate-pages-with-express-nodejs
+// https://socket.io/docs/#Using-with-Express
+// https://github.com/AnushanLingam/OpenTrivia/blob/master/src/app.js
 //export default app;
