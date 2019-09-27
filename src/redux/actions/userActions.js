@@ -15,7 +15,7 @@ import {
       .post('/auth/login', userData)
       .then((res) => {
         setAuthorizationHeader(res.data.token);
-        dispatch(getUserData());
+        dispatch(getUserData(res.data.token));
         dispatch({ type: CLEAR_ERRORS });
         history.push('/');
       })
@@ -33,7 +33,7 @@ import {
       .post('/auth/register', newUserData)
       .then((res) => {
         setAuthorizationHeader(res.data.token);
-        dispatch(getUserData());
+        dispatch(getUserData(res.data.token));
         dispatch({ type: CLEAR_ERRORS });
         history.push('/');
       })
@@ -51,10 +51,10 @@ import {
     dispatch({ type: SET_UNAUTHENTICATED });
   };
   
-  export const getUserData = () => (dispatch) => {
+  export const getUserData = (token) => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios
-      .get('/user/get')
+      .get('/user/get', {headers: {Authorization: `Bearer ${token}`}})
       .then((res) => {
         dispatch({
           type: SET_USER,

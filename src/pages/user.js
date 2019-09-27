@@ -17,14 +17,14 @@ class user extends Component {
     screamIdParam: null
   };
   componentDidMount() {
-    const handle = this.props.match.params.handle;
+    const username = this.props.match.params.username;
     const screamId = this.props.match.params.screamId;
 
     if (screamId) this.setState({ screamIdParam: screamId });
 
-    this.props.getUserData(handle);
+    this.props.getUserData(username);
     axios
-      .get(`/user/${handle}`)
+      .get(`/user/${username}`)
       .then((res) => {
         this.setState({
           profile: res.data.user

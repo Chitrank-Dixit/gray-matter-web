@@ -3,6 +3,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     path = require('path'),
+    cors = require('cors'),
     morgan = require('morgan');
 
 // Initialize the Express App
@@ -81,7 +82,7 @@ if (process.env.NODE_ENV !== 'test') {
 // Apply body Parser and server public assets and routes
 
 app.use(compression());
-
+app.use(cors());
 app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(express.static(path.resolve(__dirname, '../dist/client')));
