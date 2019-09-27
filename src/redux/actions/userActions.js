@@ -12,7 +12,7 @@ import {
   export const loginUser = (userData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios
-      .post('/login', userData)
+      .post('/auth/login', userData)
       .then((res) => {
         setAuthorizationHeader(res.data.token);
         dispatch(getUserData());
@@ -30,7 +30,7 @@ import {
   export const signupUser = (newUserData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios
-      .post('/signup', newUserData)
+      .post('/auth/register', newUserData)
       .then((res) => {
         setAuthorizationHeader(res.data.token);
         dispatch(getUserData());
@@ -54,7 +54,7 @@ import {
   export const getUserData = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios
-      .get('/user')
+      .get('/user/get')
       .then((res) => {
         dispatch({
           type: SET_USER,

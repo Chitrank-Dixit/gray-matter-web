@@ -2,6 +2,7 @@ var User = require('../models/User');
 var cuid = require('cuid');
 var slug = require('limax');
 var sanitizeHtml = require('sanitize-html');
+var jwtDecode = require('jwt-decode');
 
 /**
  * Get all users
@@ -58,12 +59,7 @@ const addUser = function(req, res) {
  * @returns void
  */
 const getUser = function(req, res) {
-  User.findOne({ cuid: req.params.cuid }).exec((err, user) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.json({ user });
-  });
+  res.json({user: req.user});
 }
 
 /**

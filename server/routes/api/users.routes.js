@@ -9,6 +9,8 @@ router.route('/list').get(UserController.getUsers);
 // Get one user by cuid
 router.route('/get/:cuid').get(UserController.getUser);
 
+router.route('/get/').get(UserController.getUser);
+
 // Add a new User
 router.route('/create').post(UserController.addUser);
 

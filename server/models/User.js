@@ -26,4 +26,4 @@ userSchema.methods.setPassword = function(password) {
     this.password = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
 
-mongoose.model('User', userSchema, 'User');
+module.exports = mongoose.model('User', userSchema, 'User');

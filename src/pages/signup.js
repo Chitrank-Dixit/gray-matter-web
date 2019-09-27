@@ -25,7 +25,7 @@ class signup extends Component {
       email: '',
       password: '',
       confirmPassword: '',
-      handle: '',
+      username: '',
       age: '',
       errors: {}
     };
@@ -45,7 +45,7 @@ class signup extends Component {
       password: this.state.password,
       confirmPassword: this.state.confirmPassword,
       age: this.state.age,
-      handle: this.state.username
+      username: this.state.username
     };
     this.props.signupUser(newUserData, this.props.history);
   };

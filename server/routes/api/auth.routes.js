@@ -35,7 +35,9 @@ router.post('/register', (req, res, next) => {
     user.age = req.body.age || 18;
     console.log("user credentials got", user);
     user.save().then(function(){
-        return res.json({"message": "user created...."})//res.json({user: user.toAuthJSON()});
+        var data = {"_id": user._id, "email": user.email, "age": user.age };
+        const token = jwt.sign(data, 'your_jwt_secret');
+        return res.json({token})//res.json({user: user.toAuthJSON()});
     }).catch(next);
 })
 
