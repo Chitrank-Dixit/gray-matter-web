@@ -28,11 +28,6 @@ class Navbar extends Component {
               </Link>
 
               <Notifications />
-              <Link to="/login">
-                <MyButton tip="Logout">
-                  <HomeIcon />
-                </MyButton>
-              </Link>
             </Fragment>
           ) : (
             <Fragment>

@@ -16,7 +16,7 @@ const getUsersTest = function(req, res) {
 }
 
 const getUsers = function(req, res) {
-  User.find().select({'username': '1', 'email': '1', 'age': '1'}).sort('-createdAt').exec((err, users) => {
+  User.find({username: req.username}).select({password: 0, salt: 0}).sort('-createdAt').exec((err, users) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -59,7 +59,7 @@ const addUser = function(req, res) {
  * @returns void
  */
 const getUser = function(req, res) {
-  res.json({user: req.user});
+  res.json({credentials: req.user, likes: [], notifications: []});
 }
 
 /**

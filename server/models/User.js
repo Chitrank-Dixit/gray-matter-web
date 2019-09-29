@@ -7,7 +7,11 @@ const userSchema = new Schema({
     password: { type: 'String', required: true },
     username: { type: 'String', required: true },
     age: {type: 'Number', required: true},
-    salt: {type: 'String'}
+    salt: {type: 'String'},
+    imageUrl: {type: 'String', default: ''},
+    bio: {type: 'String', default: ''},
+    location: {type: 'String',  default: ''},
+    website: {type: 'String', default: ''}
     // add interests
     // add badgets
     // add levels
