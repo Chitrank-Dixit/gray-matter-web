@@ -1,12 +1,15 @@
-import { Router } from 'express';
-import * as UserController from '../../controllers/user.controller';
-const router = new Router();
+var Router = require('express');
+//import * as UserController from '../../controllers/user.controller';
+var UserController = require('../../controllers/user.controller');
+const router =  Router();
 
 // Get all Users
 router.route('/list').get(UserController.getUsers);
 
 // Get one user by cuid
 router.route('/get/:cuid').get(UserController.getUser);
+
+router.route('/get/').get(UserController.getUser);
 
 // Add a new User
 router.route('/create').post(UserController.addUser);
@@ -19,4 +22,4 @@ router.route('/delete/:cuid').delete(UserController.deleteUser);
 // test
 router.route('/us').get(UserController.getUsersTest);
 
-export default router;
+module.exports = router;

@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import crypto from 'crypto';
+var mongoose = require('mongoose');
+var crypto = require('crypto');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -7,7 +7,11 @@ const userSchema = new Schema({
     password: { type: 'String', required: true },
     username: { type: 'String', required: true },
     age: {type: 'Number', required: true},
-    salt: {type: 'String'}
+    salt: {type: 'String'},
+    imageUrl: {type: 'String', default: ''},
+    bio: {type: 'String', default: ''},
+    location: {type: 'String',  default: ''},
+    website: {type: 'String', default: ''}
     // add interests
     // add badgets
     // add levels
@@ -26,4 +30,4 @@ userSchema.methods.setPassword = function(password) {
     this.password = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
 };
 
-export default mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema, 'User');

@@ -1,7 +1,7 @@
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import passport from 'passport';
-import User from '../../models/User';
+var express = require('express');
+var jwt = require('jsonwebtoken');
+var passport = require('passport');
+var User = require('../../models/User');
 const router  = express.Router();
 
 /* POST login. */
@@ -32,10 +32,12 @@ router.post('/register', (req, res, next) => {
     user.username = req.body.username;
     user.email = req.body.email;
     user.setPassword(req.body.password);
-    user.age = req.body.age;
+    user.age = req.body.age || 18;
     console.log("user credentials got", user);
     user.save().then(function(){
-        return res.json({"message": "user created...."})//res.json({user: user.toAuthJSON()});
+        var data = {"_id": user._id, "email": user.email, "age": user.age };
+        const token = jwt.sign(data, 'your_jwt_secret');
+        return res.json({token})//res.json({user: user.toAuthJSON()});
     }).catch(next);
 })
 
@@ -43,4 +45,4 @@ router.get('/us', function(req, res, next){
     return res.json({"me": "I"});
 })
 
-export default router;
+module.exports = router;

@@ -1,8 +1,8 @@
 //passport.js
-import passport from 'passport';
-import passportLocal from 'passport-local';
-import passportJWT from 'passport-jwt';
-import UserModel from '../models/User';
+var passport =require('passport');
+var passportLocal = require('passport-local');
+var passportJWT = require('passport-jwt');
+var UserModel = require('../models/User');
 const LocalStrategy = passportLocal.Strategy;
 const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
@@ -13,9 +13,8 @@ passport.use(new JWTStrategy({
     secretOrKey   : 'your_jwt_secret'
 },
 function (jwtPayload, cb) {
-    console.log(jwtPayload);
     //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
-    return UserModel.findById(jwtPayload._id)
+    return UserModel.findById(jwtPayload._id).select({"password": 0, "salt": 0})
         .then(user => {
             return cb(null, user);
         })

@@ -1,8 +1,9 @@
-import Express from 'express';
-import passport from 'passport';
+var Express = require('express');
+var passport = require('passport');
 var router = Express.Router();
 
 router.use('/auth', require('./auth.routes'));
+router.use('/question', require('./questions.routes'));
 router.use('/user', passport.authenticate('jwt', {session: false}), require('./users.routes'));
 
 router.use(function(err, req, res, next){
@@ -19,4 +20,4 @@ router.use(function(err, req, res, next){
     return next(err);
   });
 
-export default router;
+module.exports = router;
