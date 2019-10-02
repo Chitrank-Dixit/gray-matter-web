@@ -21,6 +21,11 @@ class Navbar extends Component {
           {authenticated ? (
             <Fragment>
               <PostScream />
+              <Link to="/test">
+                <MyButton tip="Test">
+                  <HomeIcon />
+                </MyButton>
+              </Link>
               <Link to="/">
                 <MyButton tip="Home">
                   <HomeIcon />

@@ -10,6 +10,7 @@ var express = require('express'),
 var app = express();
 var sock_server = require('http').Server(app);
 var io = require('socket.io')(sock_server);
+const getApiAndEmit = "TODO"
 // models
 require('./models/User');
 

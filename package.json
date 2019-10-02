@@ -42,8 +42,10 @@
     "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
     "sanitize-html": "^1.19.2",
+    "semantic-ui-react": "^0.88.1",
     "sinon": "^7.2.2",
     "socket.io": "^2.2.0",
+    "sweetalert2": "^8.18.0",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.8.0"
   },
